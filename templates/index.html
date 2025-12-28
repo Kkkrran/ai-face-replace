@@ -114,12 +114,40 @@
             margin: 30px 0;
         }
 
-        .prompt-section label {
-            display: block;
+        .prompt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
+        }
+
+        .prompt-section label {
             font-weight: 600;
             color: #333;
             font-size: 16px;
+        }
+
+        .default-prompt-btn {
+            background: #f0f0f0;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .default-prompt-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .default-prompt-btn:active {
+            transform: translateY(0);
         }
 
         .prompt-section textarea {
@@ -280,7 +308,12 @@
             </div>
             
             <div class="prompt-section">
-                <label for="prompt">提示词</label>
+                <div class="prompt-header">
+                    <label for="prompt">提示词</label>
+                    <button class="default-prompt-btn" @click="fillDefaultPrompt" type="button">
+                        使用默认提示词
+                    </button>
+                </div>
                 <textarea 
                     id="prompt" 
                     v-model="prompt" 
@@ -291,7 +324,7 @@
             <button 
                 class="generate-btn" 
                 @click="generateImage" 
-                :disabled="!clothesImage || !faceImage || loading"
+                :disabled="!clothesImage || !faceImage || !prompt || !prompt.trim() || loading"
             >
                 <span v-if="loading">
                     <span class="loading-spinner"></span>生成中...
@@ -304,6 +337,7 @@
             <div v-if="resultImage" class="result-section">
                 <h3>生成结果</h3>
                 <img :src="resultImage" class="result-img" alt="生成结果" />
+                <br />
                 <a :href="resultImage" target="_blank" class="view-original">查看原图</a>
             </div>
         </div>
@@ -330,6 +364,10 @@
                 
                 handleFaceUpload(e) {
                     this.handleImageUpload(e, 'faceImage');
+                },
+                
+                fillDefaultPrompt() {
+                    this.prompt = '将图1的人脸换为图2的人脸，注意脸的角度';
                 },
                 
                 handleImageUpload(e, imageType) {
@@ -367,6 +405,12 @@
                         return;
                     }
                     
+                    // 检查提示词是否为空
+                    if (!this.prompt || !this.prompt.trim()) {
+                        this.errorMessage = '请输入提示词，或点击"使用默认提示词"按钮';
+                        return;
+                    }
+                    
                     this.loading = true;
                     this.errorMessage = '';
                     this.resultImage = null;
@@ -382,7 +426,7 @@
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
-                                prompt: this.prompt || '将图1的人脸换为图2的人脸，注意脸的角度',
+                                prompt: this.prompt.trim(),
                                 clothesImage: clothesBase64,
                                 faceImage: faceBase64
                             })

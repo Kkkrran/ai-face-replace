@@ -25,9 +25,13 @@ def generate_image():
         if not data:
             return jsonify({'error': '请求体不能为空'}), 400
         
-        prompt = data.get('prompt', '')
+        prompt = data.get('prompt', '').strip()
         clothes_image_base64 = data.get('clothesImage')
         face_image_base64 = data.get('faceImage')
+        
+        # 检查提示词是否为空
+        if not prompt:
+            return jsonify({'error': '提示词不能为空'}), 400
         
         if not clothes_image_base64 or not face_image_base64:
             return jsonify({'error': '缺少必需的图片参数'}), 400
