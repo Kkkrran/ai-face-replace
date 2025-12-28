@@ -10,31 +10,14 @@
 - 🔧 Flask Blueprint架构，易于扩展
 - 📱 响应式设计，支持移动端
 
-## 项目结构
-
-```
-ai-face-replace/
-├── app.py                 # Flask应用主文件
-├── config.py              # 配置文件
-├── requirements.txt       # Python依赖
-├── api/                   # API Blueprint
-│   ├── __init__.py
-│   └── face_swap.py       # 换脸API路由
-├── services/              # 服务层
-│   ├── __init__.py
-│   └── face_service.py   # 换脸服务逻辑
-├── templates/             # Flask模板
-│   └── index.html        # Vue前端页面
-├── static/               # 静态文件（如需要）
-├── clothes/              # 衣物图片目录
-└── face/                 # 人脸图片目录
-```
-
 ## 安装和运行
 
-### 1. 安装依赖
+### 1. （仅初次运行）配置、进入虚拟环境并安装依赖
 
 ```bash
+# Windows
+Python -m venv .venv
+./.venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
@@ -57,6 +40,26 @@ python app.py
 ```
 
 应用将在 `http://localhost:5000` 启动。
+
+## 项目结构
+
+```
+ai-face-replace/
+├── app.py                 # Flask应用主文件
+├── config.py              # 配置文件
+├── requirements.txt       # Python依赖
+├── api/                   # API Blueprint
+│   ├── __init__.py
+│   └── face_swap.py       # 换脸API路由
+├── services/              # 服务层
+│   ├── __init__.py
+│   └── face_service.py   # 换脸服务逻辑
+├── templates/             # Flask模板
+│   └── index.html        # Vue前端页面
+├── static/               # 静态文件（如需要）
+├── clothes/              # 衣物图片目录
+└── face/                 # 人脸图片目录
+```
 
 ## API接口
 
