@@ -12,13 +12,11 @@
 
 ## 安装和运行
 
-### 1. （仅初次运行）配置、进入虚拟环境并安装依赖
+### 1. 进入虚拟环境
 
 ```bash
 # Windows
-Python -m venv .venv
 ./.venv/Scripts/activate
-pip install -r requirements.txt
 ```
 
 ### 2. 配置API密钥
@@ -28,9 +26,6 @@ pip install -r requirements.txt
 ```bash
 # Windows
 set ARK_API_KEY=your_api_key_here
-
-# Linux/Mac
-export ARK_API_KEY=your_api_key_here
 ```
 
 ### 3. 运行应用
